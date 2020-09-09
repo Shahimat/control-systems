@@ -2,7 +2,6 @@
 
     entity "Договор" as CONTRACT {
         * id
-        * timestamp
         Номер договора
         Дата договора
         Тип договра
@@ -14,13 +13,11 @@
 
     entity "Юрлицо" as PERSON {
         * id
-        * timestamp
         Наименование организации
     }
 
     entity "Этап договора" as CONTRACT_STAGE {
         * id
-        * timestamp
         Этап договора
         Дата начала
         Дата окончания
@@ -32,7 +29,6 @@
 
     entity "Фактура" as INVOICE {
         * id
-        * timestamp
         id_contract_stage
         Позиция фактуры
         Дата выполнения
@@ -43,7 +39,6 @@
 
     entity "Документ выполнения" as EXECUTION_DOCUMENT {
         * id
-        * timestamp
         Номер документа выполнения
         Дата документа
         Тип документа
