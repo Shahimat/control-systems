@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Put, Param, Body, Res, HttpStatus } from '@nestjs/common';
 import { pool } from './../pool';
 import { Response } from 'express';
 
@@ -53,6 +53,21 @@ export class PersonController {
             } else {
                 console.log(`DELETE ${id} from ${DB_NAME} OK`);
                 response.status(HttpStatus.OK).send(`${id} deleted`);
+            }
+        });
+    }
+
+    @Put(':id')
+    update(@Param('id') id: string, @Res() response: Response, @Body() values: any) {
+        let query: string = `UPDATE ${DB_NAME} SET name = '${values.name}' WHERE name = '${id}';`;
+        console.log(query);
+        pool.query(query, (err, res) => {
+            if (err) {
+                console.log(err);
+                response.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err);
+            } else {
+                console.log(`DELETE ${id} from ${DB_NAME} OK`);
+                response.status(HttpStatus.OK).send(`${id} updated`);
             }
         });
     }
