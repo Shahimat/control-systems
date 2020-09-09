@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Delete, Put, Param, Body, Res, HttpStatus } from '@nestjs/common';
-import { pool } from './../pool';
+import { pool } from './pool';
 import { Response } from 'express';
 
 const DB_NAME: string = 'person';
