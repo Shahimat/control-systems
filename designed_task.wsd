@@ -1,0 +1,75 @@
+@startuml
+
+    entity "Договор" as CONTRACT {
+        * id
+        * timestamp
+        Номер договора
+        Дата договора
+        Тип договра
+        id_Поставщик
+        id_Плательщик
+        Валюта
+        filepath
+    }
+
+    entity "Юрлицо" as PERSON {
+        * id
+        * timestamp
+        Наименование организации
+    }
+
+    entity "Этап договора" as CONTRACT_STAGE {
+        * id
+        * timestamp
+        Этап договора
+        Дата начала
+        Дата окончания
+        Единица измерения
+        Сумма
+        Количество
+        filepath
+    }
+
+    entity "Фактура" as INVOICE {
+        * id
+        * timestamp
+        id_contract_stage
+        Позиция фактуры
+        Дата выполнения
+        Сумма выполнения
+        Количество
+        filepath
+    }
+
+    entity "Документ выполнения" as EXECUTION_DOCUMENT {
+        * id
+        * timestamp
+        Номер документа выполнения
+        Дата документа
+        Тип документа
+        Валюта выполнения
+        filepath
+    }
+
+    entity MAP_CONTRACT_CONTRACT_STAGE {
+        * id_contract
+        * id_contract_stage
+    }
+
+    entity MAP_INVOICE_EXECUTION_DOCUMENT {
+        * id_invoice
+        * id_execution_document
+    }
+
+    CONTRACT       "id" ||..|{ "id_contract"       MAP_CONTRACT_CONTRACT_STAGE
+    CONTRACT_STAGE "id" ||..|{ "id_contract_stage" MAP_CONTRACT_CONTRACT_STAGE
+    
+    INVOICE "id_contract_stage" ||..|| "id" CONTRACT_STAGE
+    
+    INVOICE            "id" ||..|{ "id_invoice"            MAP_INVOICE_EXECUTION_DOCUMENT
+    EXECUTION_DOCUMENT "id" ||..|{ "id_execution_document" MAP_INVOICE_EXECUTION_DOCUMENT
+    
+    CONTRACT "id_Поставщик"  ||..|| "id" PERSON
+    CONTRACT "id_Плательщик" ||..|| "id" PERSON
+
+@enduml
