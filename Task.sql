@@ -23,7 +23,7 @@ CREATE TABLE Contract
 CREATE TABLE Person
 (
     id SERIAL,
-    Name VARCHAR(20) NOT NULL,
+    Name VARCHAR(20) NOT NULL UNIQUE,
     
     PRIMARY KEY (id)
 );
