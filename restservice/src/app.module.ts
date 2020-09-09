@@ -9,4 +9,4 @@ import { ContractController } from './contract/contract.controller';
   controllers: [AppController, ContractController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {};
