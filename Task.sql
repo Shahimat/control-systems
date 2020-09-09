@@ -8,7 +8,7 @@ CREATE DATABASE task;
 CREATE TABLE Contract
 (
     id SERIAL,
-    ContractNumber VARCHAR(20) NOT NULL,
+    ContractNumber VARCHAR(20) NOT NULL UNIQUE,
     ContractDate DATE NOT NULL,
     ContractType VARCHAR(20) NOT NULL,
     id_provider INTEGER,
@@ -33,7 +33,7 @@ CREATE TABLE Invoice
 (
     id SERIAL,
     id_contract_stage INTEGER,
-    InvoicePosition VARCHAR(20) NOT NULL,
+    InvoicePosition VARCHAR(20) NOT NULL UNIQUE,
     InvoiceDate DATE NOT NULL,
     ExecAmmount INTEGER, -- Сумма выполнения
     Quantity INTEGER,    -- Количество
@@ -46,7 +46,7 @@ CREATE TABLE Invoice
 CREATE TABLE ContractStage
 (
     id SERIAL,
-    Name VARCHAR(20) NOT NULL,
+    Name VARCHAR(20) NOT NULL UNIQUE,
     StageDateBegin DATE NOT NULL,
     StageDateEnd DATE NOT NULL,
     Unit VARCHAR(20) NOT NULL, -- Единица измерения
@@ -60,7 +60,7 @@ CREATE TABLE ContractStage
 CREATE TABLE ExecutionDocument
 (
     id SERIAL,
-    Number VARCHAR(20) NOT NULL,
+    Number VARCHAR(20) NOT NULL UNIQUE,
     DocDate DATE NOT NULL,
     DocType VARCHAR(20) NOT NULL,
     ExecCurrency VARCHAR(20) NOT NULL, -- Валюта выполнения
