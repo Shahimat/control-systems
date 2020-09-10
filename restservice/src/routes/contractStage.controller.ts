@@ -83,9 +83,20 @@ export class ContractStageController {
 
     @Delete(':id')
     remove(@Param('id') id: string, @Res() response: Response) {
-        let query: string = `DELETE FROM ${DB_TABLE_NAME} WHERE ContractNumber = '${id}';`;
-        console.log(query);
-        pool.query(query) 
+        let id_contract_stage: number = 0;
+        findPosition ('ContractStage', ['id'], 'Name', `'${id}'`)
+        .then(res => {
+            if (res.rows == undefined || res.rows.length == 0 || res.rows[0].id == undefined) {
+                throw `Name = ${id} not found`;
+            }
+            id_contract_stage = res.rows[0].id;
+            let query: string = `DELETE FROM MAP_Contract_ContractStage WHERE id_contract_stage = '${id_contract_stage}';`;
+            console.log(query);
+            return pool.query(query);
+        })
+        .then(res => {
+            return pool.query(`DELETE FROM ${DB_TABLE_NAME} WHERE id = '${id_contract_stage}';`);
+        })
         .then(res => {
             console.log(`DELETE ${id} from ${DB_TABLE_NAME} OK`);
             response.status(HttpStatus.OK).send(`${id} deleted`);
@@ -102,7 +113,7 @@ export class ContractStageController {
             response.status(HttpStatus.INTERNAL_SERVER_ERROR).send('ERROR: please set fieldName & fieldValue params');
             return;
         }
-        let query: string = `UPDATE ${DB_TABLE_NAME} SET ${values.fieldName} = '${values.fieldValue}' WHERE ContractNumber = '${id}';`;
+        let query: string = `UPDATE ${DB_TABLE_NAME} SET ${values.fieldName} = '${values.fieldValue}' WHERE Name = '${id}';`;
         console.log(query);
         pool.query(query) 
         .then(res => {
