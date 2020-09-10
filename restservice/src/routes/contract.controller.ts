@@ -24,13 +24,13 @@ function getQuery (oValue: any): string {
 }
 
 function checkQuery (oValue: any): boolean {
-    return oValue.ContractNumber && typeof(oValue.ContractNumber) == "string" &&
-    oValue.ContractDate          && typeof(oValue.ContractDate)   == "string" &&
-    oValue.ContractType          && typeof(oValue.ContractType)   == "string" &&
-    oValue.id_provider           && typeof(oValue.id_provider)    == "number" &&
-    oValue.id_payer              && typeof(oValue.id_payer)       == "number" &&  
-    oValue.currency              && typeof(oValue.currency)       == "string" &&
-    oValue.filepath              && typeof(oValue.filepath)       == "string";
+    return oValue.ContractNumber &&
+    oValue.ContractDate          &&
+    oValue.ContractType          &&
+    oValue.id_provider           &&
+    oValue.id_payer              &&  
+    oValue.currency              &&
+    oValue.filepath
 }
 
 async function findPosition (sTableName, sFindFieldName, sFieldName, sFieldValue: string) {
