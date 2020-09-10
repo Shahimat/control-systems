@@ -100,7 +100,6 @@ export class ContractController {
             }
         })
         .then(res => {
-            console.log('in');
             response.status(HttpStatus.OK).send(`${DB_TABLE_NAME} added`);
         })
         .catch(function(e) {
@@ -111,7 +110,7 @@ export class ContractController {
 
     @Delete(':id')
     remove(@Param('id') id: string, @Res() response: Response) {
-        let query: string = `DELETE FROM ${DB_TABLE_NAME} WHERE name = '${id}';`;
+        let query: string = `DELETE FROM ${DB_TABLE_NAME} WHERE ContractNumber = '${id}';`;
         console.log(query);
         pool.query(query, (err, res) => {
             if (err) {
