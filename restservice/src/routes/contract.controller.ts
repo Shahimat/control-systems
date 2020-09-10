@@ -125,7 +125,11 @@ export class ContractController {
 
     @Put(':id')
     update(@Param('id') id: string, @Res() response: Response, @Body() values: any) {
-        let query: string = `UPDATE ${DB_TABLE_NAME} SET name = '${values.name}' WHERE name = '${id}';`;
+        if (!values.fieldName || !values.fieldValue) {
+            response.status(HttpStatus.INTERNAL_SERVER_ERROR).send('ERROR: please set fieldName & fieldValue params');
+            return;
+        }
+        let query: string = `UPDATE ${DB_TABLE_NAME} SET ${values.fieldName} = '${values.fieldValue}' WHERE ContractNumber = '${id}';`;
         console.log(query);
         pool.query(query, (err, res) => {
             if (err) {
