@@ -22,6 +22,21 @@ export class PersonController {
         });
     }
 
+    @Get(':id')
+    find(@Param('id') id: string, @Res() response: Response) {
+        let query: string = `SELECT * FROM ${DB_TABLE_NAME} WHERE Name = '${id}';`;
+        console.log(query);
+        pool.query(query, (err, res) => {
+            if (err) {
+                console.log(err);
+                response.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err);
+            } else {
+                console.log(`GET ${DB_TABLE_NAME} OK`);
+                response.status(HttpStatus.OK).json(res.rows);
+            }
+        });
+    }
+
     @Post()
     create(@Body() values: any, @Res() response: Response) {
         console.log(values);
