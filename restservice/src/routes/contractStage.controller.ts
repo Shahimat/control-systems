@@ -45,25 +45,32 @@ export class ContractStageController {
 
     @Post()
     create(@Body() values: any, @Res() response: Response) {
-        findPosition ('Person', ['id'], 'Name', `'${values.provider}'`)
+        let data = {
+            id_contract: 0,
+            id_contract_stage: 0
+        };
+        findPosition ('Contract', ['id'], 'ContractNumber', `'${values.contractNumber}'`)
         .then(res => {
             if (res.rows == undefined || res.rows.length == 0 || res.rows[0].id == undefined) {
-                throw `provider = ${values.provider} not found`;
+                throw `ContractNumber = ${values.contractNumber} not found`;
             }
-            values.id_provider = res.rows[0].id;
-            values.provider    = null;
-            return findPosition ('Person', ['id'], 'Name', `'${values.payer}'`);
-        })
-        .then(res => {
-            if (res.rows == undefined || res.rows.length == 0 || res.rows[0].id == undefined) {
-                throw `payer = ${values.payer} not found`;
-            }
-            values.id_payer = res.rows[0].id;
-            values.payer    = null;
+            data.id_contract = res.rows[0].id;
+            values.contractNumber = null;
             if (!checkQuery(values, DB_TABLE_FIELDS)) {
                 throw values;
             }
+            // console.log(getInsertQuery(values, DB_TABLE_NAME));
             return pool.query(getInsertQuery(values, DB_TABLE_NAME));
+        })
+        .then(res => {
+            return findPosition ('ContractStage', ['id'], 'Name', `'${values.Name}'`)
+        })
+        .then(res => {
+            if (res.rows == undefined || res.rows.length == 0 || res.rows[0].id == undefined) {
+                throw `Name = ${values.Name} not found`;
+            }
+            data.id_contract_stage = res.rows[0].id;
+            return pool.query(getInsertQuery(data, 'MAP_Contract_ContractStage'));
         })
         .then(res => {
             response.status(HttpStatus.OK).send(`${DB_TABLE_NAME} added`);
