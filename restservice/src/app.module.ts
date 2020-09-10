@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { ContractController }      from './routes/contract.controller';
 import { PersonController }        from './routes/person.controller';
 import { ContractStageController } from './routes/contractStage.controller';
+import { InvoiceController }       from './routes/invoice.controller';
 
 @Module({
   imports: [],
@@ -12,7 +13,8 @@ import { ContractStageController } from './routes/contractStage.controller';
     AppController, 
     ContractController, 
     PersonController,
-    ContractStageController
+    ContractStageController,
+    InvoiceController
   ],
   providers: [AppService],
 })
